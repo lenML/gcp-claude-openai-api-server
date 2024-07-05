@@ -132,3 +132,4 @@ dist
 anthropic-vertex-credentials.json
 
 /output
+/gcoas_*.zip
