@@ -5,6 +5,7 @@
   "main": "./src/server.ts",
   "scripts": {
     "start": "tsx ./src/server.ts",
+    "build:ci": "bash ./scripts/build.sh",
     "build": "rollup -c rollup.config.mjs",
     "build:windows": "nexe ./output/server.js -o ./output/windows/server.exe -t windows-x64-14.15.3",
     "build:linux": "nexe ./output/server.js -o ./output/linux/server.linux -t linux-x64-14.15.3",
@@ -20,6 +21,7 @@
     "fastify-sse-v2": "^4.0.0",
     "http-proxy-agent": "^7.0.2",
     "https-proxy-agent": "^7.0.5",
+    "node-abort-controller": "^3.1.1",
     "node-fetch": "^3.3.2"
   },
   "devDependencies": {
