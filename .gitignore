@@ -130,3 +130,5 @@ dist
 .pnp.*
 
 anthropic-vertex-credentials.json
+
+/output

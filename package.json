@@ -4,19 +4,39 @@
   "description": "",
   "main": "./src/server.ts",
   "scripts": {
-    "start": "tsx ./src/server.ts"
+    "start": "tsx ./src/server.ts",
+    "build": "rollup -c rollup.config.mjs",
+    "build:win": "nexe ./output/server.js -o ./output/server.exe -t windows-x64-14.15.3",
+    "build:linux": "nexe ./output/server.js -o ./output/server.linux -t linux-x64-14.15.3",
+    "build:mac": "nexe ./output/server.js -o ./output/server.mac -t mac-x64-14.15.3"
   },
   "keywords": [],
   "author": "zhzluke96",
   "license": "AGPL-3.0-only",
   "dependencies": {
     "@anthropic-ai/vertex-sdk": "^0.4.0",
-    "@types/node": "^20.14.9",
     "dotenv": "^16.4.5",
     "fastify": "^4.28.1",
     "fastify-sse-v2": "^4.0.0",
     "http-proxy-agent": "^7.0.2",
     "https-proxy-agent": "^7.0.5",
+    "node-fetch": "^3.3.2"
+  },
+  "devDependencies": {
+    "@babel/preset-env": "^7.24.7",
+    "@rollup/plugin-commonjs": "^26.0.1",
+    "@rollup/plugin-json": "^6.1.0",
+    "@rollup/plugin-node-resolve": "^15.2.3",
+    "@rollup/plugin-replace": "^5.0.7",
+    "@rollup/plugin-typescript": "^11.1.6",
+    "@types/node": "^20.14.9",
+    "esbuild": "^0.23.0",
+    "magic-string": "^0.30.10",
+    "nexe": "4.0.0-rc.6",
+    "rollup": "^4.18.0",
+    "rollup-plugin-babel": "^4.4.0",
+    "rollup-plugin-esbuild": "^6.1.1",
+    "rollup-plugin-typescript2": "^0.36.0",
     "tslib": "^2.6.3",
     "tsx": "^4.16.2",
     "typescript": "^5.5.3"
