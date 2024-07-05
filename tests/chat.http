@@ -1,0 +1,39 @@
+POST http://localhost:3565/v1/chat/completions HTTP/1.1
+Content-Type: application/json
+
+{
+  "messages": [
+    {
+      "role": "system",
+      "content": "You are a helpful assistant."
+    },
+    {
+      "role": "user",
+      "content": "请回复测试成功"
+    }
+  ],
+  "max_tokens": 24,
+  "model": "claude-3-5-sonnet-20240620"
+}
+
+### stream
+POST http://localhost:3565/v1/chat/completions HTTP/1.1
+Content-Type: application/json
+
+{
+  "messages": [
+    {
+      "role": "system",
+      "content": "You are a helpful assistant."
+    },
+    {
+      "role": "user",
+      "content": "请回复测试成功"
+    }
+  ],
+  "max_tokens": 24,
+  "model": "claude-3-5-sonnet-20240620",
+  "stream": true
+}
+
+

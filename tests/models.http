@@ -1,0 +1,1 @@
+GET http://localhost:3565/v1/models HTTP/1.1

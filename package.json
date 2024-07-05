@@ -1,0 +1,24 @@
+{
+  "name": "gcp-claude-openai-api-server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "./src/server.ts",
+  "scripts": {
+    "start": "tsx ./src/server.ts"
+  },
+  "keywords": [],
+  "author": "zhzluke96",
+  "license": "AGPL-3.0-only",
+  "dependencies": {
+    "@anthropic-ai/vertex-sdk": "^0.4.0",
+    "@types/node": "^20.14.9",
+    "dotenv": "^16.4.5",
+    "fastify": "^4.28.1",
+    "fastify-sse-v2": "^4.0.0",
+    "http-proxy-agent": "^7.0.2",
+    "https-proxy-agent": "^7.0.5",
+    "tslib": "^2.6.3",
+    "tsx": "^4.16.2",
+    "typescript": "^5.5.3"
+  }
+}
