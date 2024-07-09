@@ -16,7 +16,9 @@
   "license": "AGPL-3.0-only",
   "dependencies": {
     "@anthropic-ai/vertex-sdk": "^0.4.0",
-    "@lenml/tokenizer-claude": "^1.0.4",
+    "@huggingface/jinja": "^0.2.2",
+    "@lenml/tokenizer-claude": "^1.0.10",
+    "@lenml/tokenizers": "^1.0.9",
     "dotenv": "^16.4.5",
     "fastify": "^4.28.1",
     "fastify-sse-v2": "^4.0.0",

@@ -51,7 +51,7 @@ export default {
     }),
     esbuild({
       include: /\.[jt]sx?$/,
-      // exclude: /node_modules/,
+      exclude: [],
       sourceMap: false,
       minify: process.env.NODE_ENV === "production",
       target: "node14",

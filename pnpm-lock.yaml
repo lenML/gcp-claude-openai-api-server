@@ -8,9 +8,15 @@ dependencies:
   '@anthropic-ai/vertex-sdk':
     specifier: ^0.4.0
     version: 0.4.0
+  '@huggingface/jinja':
+    specifier: ^0.2.2
+    version: 0.2.2
   '@lenml/tokenizer-claude':
-    specifier: ^1.0.4
-    version: 1.0.4
+    specifier: ^1.0.10
+    version: 1.0.10
+  '@lenml/tokenizers':
+    specifier: ^1.0.9
+    version: 1.0.9
   dotenv:
     specifier: ^16.4.5
     version: 16.4.5
@@ -1821,6 +1827,11 @@ packages:
       fast-deep-equal: 3.1.3
     dev: false
 
+  /@huggingface/jinja@0.2.2:
+    resolution: {integrity: sha512-/KPde26khDUIPkTGU82jdtTW9UAuvUTumCAbFs/7giR0SxsvZC4hru51PBvpijH6BVkHcROcvZM/lpy5h1jRRA==}
+    engines: {node: '>=18'}
+    dev: false
+
   /@isaacs/cliui@8.0.2:
     resolution: {integrity: sha512-O8jcjabXaleOG9DQ0+ARXWZBTfnP4WNAqzuiJK7ll44AmxGKv/J2M4TPjxjY3znBCfvBXFzucm1twdyFybFqEA==}
     engines: {node: '>=12'}
@@ -1863,14 +1874,14 @@ packages:
       '@jridgewell/sourcemap-codec': 1.4.15
     dev: true
 
-  /@lenml/tokenizer-claude@1.0.4:
-    resolution: {integrity: sha512-W2OFzTWuCY6NSDljeQ4Czrvy8IpQA4yvtHfvUoc2RxNHUe+UCz2ALbmtlt/ziktUaDuctvp9mU/cZPWCUYYHfg==}
+  /@lenml/tokenizer-claude@1.0.10:
+    resolution: {integrity: sha512-hRot2tF67EUnHIK0ArNAFy6Yq4PKhyoral8CUEd42XKsMxuC3PpNGimXdpLuRs6F0R6xdInKPXVNSuz29lK1Mw==}
     dependencies:
-      '@lenml/tokenizers': 1.0.6
+      '@lenml/tokenizers': 1.0.9
     dev: false
 
-  /@lenml/tokenizers@1.0.6:
-    resolution: {integrity: sha512-gaWyfhk5/qR/q6++FsOEm3BnbjNvo/1EjbHBmn/ojPfYTHXycEe0yofCebdDqS1WfTSLzw6Ukq1SAXjryialJw==}
+  /@lenml/tokenizers@1.0.9:
+    resolution: {integrity: sha512-x9WhmFShzjcSCul5vmYFp8luarBdig7s0pHBnqZsJeE/Q2eyMEZhIPu/yK3+nAAkhjkCfTtGWUZBEgCRU/okRg==}
     dev: false
 
   /@nodelib/fs.scandir@2.1.5:

@@ -1,7 +1,11 @@
 import { OpenAI_NS } from "./tyeps";
 import { cloneDeep } from "./utils";
 
-import { fromPreTrained } from "@lenml/tokenizer-claude";
+import {
+  tokenizerJSON,
+  tokenizerConfig,
+} from "@lenml/tokenizer-claude/src/data.ts";
+import { TokenizerLoader } from "@lenml/tokenizers/src/main.ts";
 
 const rename_roles = {
   user: "Human",
@@ -10,7 +14,10 @@ const rename_roles = {
   example_assistant: "A",
 } as Record<string, string>;
 
-const tokenizer = fromPreTrained();
+const tokenizer = TokenizerLoader.fromPreTrained({
+  tokenizerConfig,
+  tokenizerJSON,
+});
 
 export enum SystemMergeMode {
   /**
