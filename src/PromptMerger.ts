@@ -164,6 +164,8 @@ export class PromptMerger {
           }
         }
       }
+
+      system_prompt = system_prompts.join(this.options.join_string);
     };
 
     const only_first_with = (role: "user" | "assistant" | "remove") => {
@@ -173,7 +175,6 @@ export class PromptMerger {
       }
 
       if (role !== "remove") {
-        system_prompt = first_system.message.content;
         const suffix = system_messages
           .slice(1)
           .map((m) => m.message.content)
