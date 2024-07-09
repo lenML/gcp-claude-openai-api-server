@@ -8,3 +8,8 @@ export const claude_stop_to_openai_stop = (cl_stop: string) => {
     }[cl_stop] ?? cl_stop
   );
 };
+
+export const cloneDeep = <T>(x: T): T =>
+  globalThis.structuredClone
+    ? globalThis.structuredClone(x)
+    : JSON.parse(JSON.stringify(x));

@@ -34,10 +34,18 @@ export const client = new AnthropicVertex({
     ? new HttpsProxyAgent(process.env.HTTPS_PROXY)
     : undefined,
 });
+
 // 简单的进行一下校验，如果不设置 private_key，那么就不校验
 export const private_key = process.env.PRIVATE_KEY ?? "";
 // 对于第一个 message 的处理方式，可以是 remove 或者 添加 "continue"
 export const ensure_first_mode = process.env.ENSURE_FIRST_MODE ?? "remove";
+export const prompt_merge_mode = process.env.PROMPT_MERGE_MODE ?? "only_system";
+export const system_merge_mode =
+  process.env.SYSTEM_MERGE_MODE ?? "merge_top_user";
+export const max_token_length = parseInt(
+  process.env.MAX_TOKEN_LENGTH ?? "4096"
+);
+
 export const app = fastify({
   logger: true,
 });

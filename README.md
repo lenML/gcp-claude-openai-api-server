@@ -66,10 +66,11 @@ ENSURE_FIRST_MODE=continue
 
 ## ENSURE_FIRST_MODE Explanation
 
-The `ENSURE_FIRST_MODE` setting addresses the "first message must be user" requirement:
+The `ENSURE_FIRST_MODE` setting ensures that the first message in the conversation is always from the user. This is necessary because some AI models require the first message to be from the user. There are two modes:
 
-- `remove` (default): Removes system messages if they appear before the first user message.
-- `continue`: Keeps all messages, potentially allowing system messages before user messages.
+- `remove` (default): If the first message is not from the user, it removes all assistant messages until it finds the first user message. This ensures that the conversation always starts with a user message.
+
+- `continue`: If the first message is not from the user, it adds a new user message with the content "continue" at the beginning of the conversation. This preserves all existing messages while still ensuring that the first message is from the user.
 
 ## Contributing
 

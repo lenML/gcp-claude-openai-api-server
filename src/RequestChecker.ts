@@ -5,7 +5,11 @@ import {
   claude_model_names_map,
   support_models,
   ensure_first_mode,
+  prompt_merge_mode,
+  system_merge_mode,
+  max_token_length,
 } from "./constants";
+import { PromptMerger } from "./PromptMerger";
 
 export class RequestPreProcess {
   constructor(
@@ -76,21 +80,53 @@ export class RequestPreProcess {
       });
       return null;
     }
+    if (temperature < 0 || temperature > 1) {
+      await reply.code(400).send({
+        message: "temperature should be between 0 and 1",
+        code: "invalid_temperature",
+      });
+      return null;
+    }
+    if (top_p < 0 || top_p > 1) {
+      await reply.code(400).send({
+        message: "top_p should be between 0 and 1",
+        code: "invalid_top_p",
+      });
+      return null;
+    }
+    if (max_tokens < 1) {
+      await reply.code(400).send({
+        message: "max_tokens should be greater than 0",
+        code: "invalid_max_tokens",
+      });
+      return null;
+    }
+    // claude api limit
+    if (max_tokens > 4096) {
+      await reply.code(400).send({
+        message: "max_tokens should be less than 4096",
+        code: "invalid_max_tokens",
+      });
+      return null;
+    }
 
     if (!Array.isArray(messages)) {
       throw new Error("messages should be an array");
     }
 
-    const ensure_result = await this.ensure_first_message_is_user();
-    if (!ensure_result) {
+    const { system_prompt, messages: merged_messages } =
+      this.process_messages();
+    const ensure_messages = await this.ensure_first_message_is_user(
+      merged_messages
+    );
+    if (!ensure_messages) {
       return null;
     }
-    const { system0, no_sys_messages } = ensure_result;
 
     return {
       created: Math.ceil(new Date().getTime() / 1000),
-      system: system0?.content,
-      messages: no_sys_messages,
+      system: system_prompt || undefined,
+      messages: ensure_messages,
       model,
       max_tokens,
       temperature,
@@ -99,30 +135,34 @@ export class RequestPreProcess {
     };
   }
 
-  async ensure_first_message_is_user() {
-    const { reply } = this;
+  private process_messages() {
     const { messages } = this.payload;
+    const merger = new PromptMerger(messages, {
+      prompt_merge_mode: prompt_merge_mode as any,
+      system_merge_mode: system_merge_mode as any,
+      max_token_length: max_token_length,
+    });
+    return merger.merge();
+  }
 
-    // 因为 claude 的 system 需要单独设置，所以从 messages 中提取出来
-    // NOTE: 所以也就是说，只支持一个 system
-    const system0 = messages.find((m) => m.role === "system");
-    const no_sys_messages = messages.filter((m) => m.role !== "system") as {
-      role: "user" | "assistant";
-      content: string;
-    }[];
-    if (no_sys_messages[0].role !== "user") {
+  async ensure_first_message_is_user(
+    messages: OpenAI_NS.CompletionRequest["messages"]
+  ) {
+    const { reply } = this;
+
+    if (messages[0].role !== "user") {
       // ensure first message is 'user' role
       switch (ensure_first_mode) {
         case "remove": {
           // NOTE: if the first message is not user, remove it until the first user message
-          while (no_sys_messages[0].role !== ("user" as any)) {
-            no_sys_messages.shift();
+          while (messages[0].role !== ("user" as any)) {
+            messages.shift();
           }
           break;
         }
         case "continue": {
           // NOTE: if the first message is not user, add a user message `continue`
-          no_sys_messages.unshift({
+          messages.unshift({
             role: "user",
             content: "continue",
           });
@@ -135,7 +175,7 @@ export class RequestPreProcess {
         }
       }
     }
-    if (no_sys_messages.length === 0) {
+    if (messages.length === 0) {
       await reply.code(400).send({
         message: "messages should contain at least one user message",
         code: "messages_empty",
@@ -143,9 +183,9 @@ export class RequestPreProcess {
       return null;
     }
 
-    return {
-      system0,
-      no_sys_messages,
-    };
+    return messages.filter((x) => x.role !== "system") as {
+      role: "user" | "assistant";
+      content: string;
+    }[];
   }
 }
