@@ -64,13 +64,52 @@ HTTPS_PROXY=http://your-proxy-url:port
 ENSURE_FIRST_MODE=continue
 ```
 
-## ENSURE_FIRST_MODE Explanation
+## System Variables Explanation
 
-The `ENSURE_FIRST_MODE` setting ensures that the first message in the conversation is always from the user. This is necessary because some AI models require the first message to be from the user. There are two modes:
+### ENSURE_FIRST_MODE
 
-- `remove` (default): If the first message is not from the user, it removes all assistant messages until it finds the first user message. This ensures that the conversation always starts with a user message.
+```typescript
+export const ensure_first_mode = process.env.ENSURE_FIRST_MODE ?? "remove";
+```
 
-- `continue`: If the first message is not from the user, it adds a new user message with the content "continue" at the beginning of the conversation. This preserves all existing messages while still ensuring that the first message is from the user.
+The `ENSURE_FIRST_MODE` setting determines how the system handles the first message in the conversation. It has two possible values:
+
+- `"remove"` (default): If the first message is not from the user, it removes all assistant messages until it finds the first user message. This ensures that the conversation always starts with a user message.
+- `"continue"`: If the first message is not from the user, it adds a new user message with the content "continue" at the beginning of the conversation. This preserves all existing messages while still ensuring that the first message is from the user.
+
+### PROMPT_MERGE_MODE
+
+```typescript
+export const prompt_merge_mode = process.env.PROMPT_MERGE_MODE ?? "only_system";
+```
+
+The `PROMPT_MERGE_MODE` setting determines how messages are merged in the conversation. It corresponds to the `PromptMergeMode` enum and has two possible values:
+
+- `"only_system"` (default): Only system messages are merged, while other messages remain separate.
+- `"all"`: All messages except system messages are merged into a single user message.
+
+### SYSTEM_MERGE_MODE
+
+```typescript
+export const system_merge_mode = process.env.SYSTEM_MERGE_MODE ?? "merge_top_user";
+```
+
+The `SYSTEM_MERGE_MODE` setting determines how system messages are handled and merged. It corresponds to the `SystemMergeMode` enum and has several possible values:
+
+- `"merge_top_user"` (default): Merges all top system messages together, and treats the remaining system messages as user prompt suffixes.
+- `"merge_all"`: Merges all system messages together, ignoring the order of other roles.
+- `"merge_top_assistant"`: Merges all top system messages together, and treats the remaining system messages as assistant prompt suffixes.
+- `"only_first_user"`: Uses only the first system message as the system prompt, and treats the remaining system messages as user prompt suffixes.
+- `"only_first_assistant"`: Uses only the first system message as the system prompt, and treats the remaining system messages as assistant prompt suffixes.
+- `"only_first_remove"`: Uses only the first system message as the system prompt and ignores the rest.
+
+### MAX_TOKEN_LENGTH
+
+```typescript
+export const max_token_length = parseInt(process.env.MAX_TOKEN_LENGTH ?? "4096");
+```
+
+The `MAX_TOKEN_LENGTH` setting determines the maximum number of tokens allowed in the conversation. It is parsed as an integer from the environment variable, with a default value of 4096 if not specified.
 
 ## Contributing
 
