@@ -129,6 +129,8 @@ export const max_token_length = parseInt(process.env.MAX_TOKEN_LENGTH ?? "4096")
 
 The `MAX_TOKEN_LENGTH` setting determines the maximum number of tokens allowed in the conversation. It is parsed as an integer from the environment variable, with a default value of 4096 if not specified.
 
+> This configuration is used when merging prompts and does not affect API call parameters.
+
 ## Contributing
 
 Contributions are welcome! Please feel free to submit a Pull Request.
