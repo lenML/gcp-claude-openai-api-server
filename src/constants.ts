@@ -3,6 +3,7 @@ import { fastify } from "fastify";
 import { HttpsProxyAgent } from "https-proxy-agent";
 
 export const support_models = [
+  "claude-3-5-sonnet-v2@20241022",
   "claude-3-5-sonnet@20240620",
   "claude-3-opus@20240229",
   "claude-3-sonnet@20240229",
@@ -15,6 +16,7 @@ export const support_models = [
   //   "gemini-1.0-pro-vision",
 ];
 export const claude_model_names_map = {
+  "claude-3-5-sonnet-20241022": "claude-3-5-sonnet-v2@20241022",
   "claude-3-5-sonnet-20240620": "claude-3-5-sonnet@20240620",
   "claude-3-opus-20240229": "claude-3-opus@20240229",
   "claude-3-sonnet-20240229": "claude-3-sonnet@20240229",
@@ -34,6 +36,17 @@ export const client = new AnthropicVertex({
     ? new HttpsProxyAgent(process.env.HTTPS_PROXY)
     : undefined,
 });
+
+console.log(
+  `
+=== setup info ===
+access_token: ${client.accessToken?.slice(0, 5)}***
+project_id: ${client.projectId?.slice(0, 5)}***
+cloud_ml_region: ${client.region}
+https_proxy: ${process.env.HTTPS_PROXY}
+===
+  `
+);
 
 // 简单的进行一下校验，如果不设置 private_key，那么就不校验
 export const private_key = process.env.PRIVATE_KEY ?? "";
